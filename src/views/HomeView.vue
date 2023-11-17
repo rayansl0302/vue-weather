@@ -13,7 +13,7 @@
         class="absolute bg-weather-secondary text-white w-full shadow-md py-2 px-1 top-[66px]"
       >
         <p v-if="searchError">Sorry, something went wrong, please try again.</p>
-        <p v-if="!serverError && mapBoxSearchResults.length === 0">
+        <p v-if="!searchError && mapBoxSearchResults.length === 0">
           No results match your query, try a different term
         </p>
         <template v-else>
@@ -21,6 +21,7 @@
             v-for="searchResults in mapBoxSearchResults"
             :key="searchResults.id"
             class="py-2 cursor-pointer"
+            @click="previewCity(searchResults)"
           >
             {{ searchResults.place_name }}
           </li>
@@ -33,6 +34,24 @@
 <script setup>
 import { ref } from 'vue'
 import axios from 'axios'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const previewCity = (searchResults) => {
+  console.log(searchResults)
+  const [city, state] = searchResults.place_name.split(',')
+  router.push({
+    name: 'cityView',
+    params: { state: state.trim(), city: city.trim() },
+    query: {
+      lat: searchResults.geometry.coordinates[1],
+      lng: searchResults.geometry.coordinates[0],
+      preview: true,
+    },
+  })
+}
+
 const mapBoxAPIKey =
   'pk.eyJ1IjoiYWp2YXJyZWxpc2giLCJhIjoiY2xwMzVucnVjMHpzNDJobmxhZG1yMG1nNSJ9.PaX71_k3j27gRifYO9OfHw'
 
@@ -46,6 +65,7 @@ const getSearchResults = () => {
   queryTimeout.value = setTimeout(async () => {
     if (searchQurey.value !== '') {
       try {
+        searchError.value = false
         const res = await axios.get(
           `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchQurey.value}.json?access_token=${mapBoxAPIKey}&types=place`
         )
