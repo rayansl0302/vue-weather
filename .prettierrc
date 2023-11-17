@@ -1,0 +1,8 @@
+{
+  "trailingComma": "es5",
+  "indent_style": "tab",
+  "tabWidth": 2,
+  "semi": false,
+  "singleQuote": true,
+  "max_line_width": 80
+}
