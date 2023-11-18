@@ -12,10 +12,12 @@
         v-if="mapBoxSearchResults"
         class="absolute bg-weather-secondary text-white w-full shadow-md py-2 px-1 top-[66px]"
       >
-        <p v-if="searchError">Sorry, something went wrong, please try again.</p>
-        <p v-if="!searchError && mapBoxSearchResults.length === 0">
+        <li v-if="searchError">
+          Sorry, something went wrong, please try again.
+        </li>
+        <li v-if="!searchError && mapBoxSearchResults.length === 0">
           No results match your query, try a different term
-        </p>
+        </li>
         <template v-else>
           <li
             v-for="searchResults in mapBoxSearchResults"
@@ -52,8 +54,7 @@ const previewCity = (searchResults) => {
   })
 }
 
-const mapBoxAPIKey =
-  'pk.eyJ1IjoiYWp2YXJyZWxpc2giLCJhIjoiY2xwMzVucnVjMHpzNDJobmxhZG1yMG1nNSJ9.PaX71_k3j27gRifYO9OfHw'
+const mapBoxAPIKey = import.meta.env.VITE_MAPBOX_KEY
 
 const searchQurey = ref('')
 const queryTimeout = ref(null)
