@@ -5,10 +5,7 @@
 			v-if="route.query.preview"
 			class="text-white p-4 bg-weather-secondary w-full text-center"
 		>
-			<p>
-				You are currently previewing this city, click the "+" icon to add this
-				city to your list.
-			</p>
+			<p>Klicka på "+"-ikonen för att lägga till denna stad i din lista.</p>
 		</div>
 		<!-- Weather Overview -->
 		<div class="flex flex-col items-center text-white py-4">
@@ -66,45 +63,46 @@
 				}}
 			</p>
 		</div>
-	</div>
-	<hr class="border-white border-opacity-10 border w-full" />
-	<!-- Hourly Weather -->
-	<div class="max-w-screen-md w-full py-12">
-		<div class="mx-8 text-white">
-			<h2 class="mb-4">Kommande 24h</h2>
-			<div class="flex gap-10 overflow-x-scroll">
-				<div
-					v-for="hourData in forecastData.list.slice(0, 9)"
-					:key="hourData.dt"
-					class="flex flex-col gap-4 items-center"
-				>
-					<p class="whitespace-nowrap text-md">
-						{{
-							new Date(hourData.dt_txt).toLocaleTimeString('sv-SE', {
-								weekday: 'long',
-								hour: 'numeric',
-								minute: 'numeric',
-							})
-						}}
-					</p>
-					<img
-						class="w-auto h-[50px] object-cover"
-						:src="`http://openweathermap.org/img/wn/${hourData.weather[0].icon}@2x.png`"
-						alt=""
-					/>
-					<p class="text-xl">{{ Math.round(hourData.main.temp) }}&deg;c</p>
-					<p class="text-sm text-center">
-						{{ Math.round(hourData.main.feels_like) }}&deg;c
-					</p>
+		<hr class="border-white border-opacity-10 border w-full" />
+		<!-- Hourly Weather -->
+		<div class="max-w-screen-md w-full py-4">
+			<div class="mx-8 text-white">
+				<h2 class="mb-4">Kommande 24h</h2>
+				<div class="flex gap-10 overflow-x-scroll">
+					<div
+						v-for="hourData in forecastData.list.slice(0, 9)"
+						:key="hourData.dt"
+						class="flex flex-col gap-4 items-center"
+					>
+						<p class="whitespace-nowrap text-md">
+							{{
+								new Date(hourData.dt_txt).toLocaleTimeString('sv-SE', {
+									weekday: 'long',
+									hour: 'numeric',
+									minute: 'numeric',
+								})
+							}}
+						</p>
+						<img
+							class="w-auto h-[50px] object-cover"
+							:src="`http://openweathermap.org/img/wn/${hourData.weather[0].icon}@2x.png`"
+							alt=""
+						/>
+						<p class="text-xl">{{ Math.round(hourData.main.temp) }}&deg;c</p>
+						<p class="text-sm text-center">
+							{{ Math.round(hourData.main.feels_like) }}&deg;c
+						</p>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<hr class="border-white border-opacity-10 border w-full" />
+	<hr class="border-white border-opacity-10 border w-full mb-4" />
 
 	<div
-		class="flex items-center justify-center gap-2 py-12 text-white cursor-pointer duration-150 hover:text-red-500"
+		v-if="!route.query.preview"
+		class="flex items-center justify-center gap-2 py-8 text-white cursor-pointer duration-150 hover:text-red-500"
 		@click="removeCity"
 	>
 		<i class="fa-solid fa-trash"></i>
