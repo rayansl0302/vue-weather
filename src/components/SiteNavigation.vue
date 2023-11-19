@@ -7,16 +7,7 @@
 		>
 			<RouterLink :to="{ name: 'home' }">
 				<div class="flex items-center gap-3">
-					<Logo />
-					<!-- <img
-						src="{{
-						logo
-						}}"
-						alt="Vue.JS"
-						width="32"
-						height="32"
-						class="italic"
-					/> -->
+					<Logo class="w-8" />
 					<p class="text-2xl font-bold">Väder App</p>
 				</div>
 			</RouterLink>
