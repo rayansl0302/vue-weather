@@ -63,12 +63,12 @@
 				}}
 			</p>
 		</div>
-		<hr class="border-white border-opacity-10 border w-full" />
+		<hr class="border-white border-opacity-10 border w-full mb-4" />
 		<!-- Hourly Weather -->
-		<div class="max-w-screen-md w-full py-4">
+		<div class="max-w-screen-md w-full py-4 mx-auto">
 			<div class="mx-8 text-white">
-				<h2 class="mb-4 text-lg">Kommande dygn</h2>
-				<div class="flex gap-10 overflow-x-scroll">
+				<h2 class="mb-4 text-lg font-bold">Kommande dygn</h2>
+				<div class="flex gap-10 overflow-x-scroll md:justify-center py-4">
 					<div
 						v-for="hourData in forecastData.list.slice(0, 9)"
 						:key="hourData.dt"
@@ -101,11 +101,12 @@
 				</div>
 			</div>
 		</div>
+		<hr class="border-white border-opacity-10 border w-full mb-4" />
 		<!-- Weekly Weather -->
 		<div class="max-w-screen-md w-full py-4">
 			<div class="mx-8 text-white">
-				<h2 class="mb-4 text-lg">Kommande vecka</h2>
-				<div class="flex gap-10 overflow-x-scroll">
+				<h2 class="mb-4 text-lg font-bold">Kommande vecka</h2>
+				<div class="flex gap-10 overflow-x-scroll md:justify-center py-4">
 					<div
 						v-for="daily in dailyData"
 						:key="daily.dt"
