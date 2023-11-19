@@ -26,11 +26,12 @@
 			</p>
 			<p class="text-8xl">{{ Math.round(weatherData.main.temp) }}&deg;c</p>
 			<img
-				class="w-[150px] h-auto"
+				class="w-[100px] h-auto"
 				:src="`http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`"
 				:alt="`${weatherData.weather[0].description}`"
 				:title="`${weatherData.weather[0].description}`"
 			/>
+			<p class="capitalize">{{ weatherData.weather[0].description }}</p>
 			<p class="text-xl">
 				Känns som
 				{{ Math.round(weatherData.main.feels_like) }}&deg;c
@@ -45,6 +46,10 @@
 					:style="{ transform: `rotate(${weatherData.wind.deg}deg)` }"
 					class="fa-solid fa-angles-down"
 				></i>
+			</p>
+			<p v-if="weatherData.amount">
+				<i class="fa-solid fa-cloud-rain"></i>
+				&nbsp; {{ weatherData.amount }}<span> m.m</span>
 			</p>
 			<p>
 				<i class="fa-regular fa-sun"></i>
@@ -72,7 +77,7 @@
 					<div
 						v-for="hourData in forecastData.list.slice(0, 9)"
 						:key="hourData.dt"
-						class="flex flex-col gap-4 items-center"
+						class="flex flex-col gap-1 items-center"
 					>
 						<p class="whitespace-nowrap text-md capitalize">
 							{{
@@ -88,6 +93,9 @@
 							:src="`http://openweathermap.org/img/wn/${hourData.weather[0].icon}@2x.png`"
 							alt=""
 						/>
+						<p class="capitalize text-sm">
+							{{ weatherData.weather[0].description }}
+						</p>
 						<p class="text-xl">{{ Math.round(hourData.main.temp) }}&deg;c</p>
 						<p class="text-xs text-center">
 							<span class="block"
@@ -96,6 +104,10 @@
 							<span class="block"
 								>L &nbsp; {{ Math.round(hourData.main.temp_min) }}&deg;c
 							</span>
+						</p>
+						<p class="text-xs" v-if="hourData.amount">
+							<i v-if="hourData.amount" class="fa-solid fa-cloud-rain"></i>
+							&nbsp; {{ hourData.amount }} m.m
 						</p>
 					</div>
 				</div>
@@ -110,7 +122,7 @@
 					<div
 						v-for="daily in dailyData"
 						:key="daily.dt"
-						class="flex flex-col gap-4 items-center"
+						class="flex flex-col gap-1 items-center"
 					>
 						<p class="whitespace-nowrap text-md capitalize">
 							{{
@@ -127,7 +139,11 @@
 							:src="`http://openweathermap.org/img/wn/${daily.weather[0].icon}@2x.png`"
 							alt=""
 						/>
+						<p class="capitalize text-sm">
+							{{ weatherData.weather[0].description }}
+						</p>
 						<p class="text-xl">{{ Math.round(daily.main.temp) }}&deg;c</p>
+
 						<p class="text-xs text-center">
 							<span class="block"
 								>H &nbsp; {{ Math.round(daily.main.temp_max) }}&deg;c</span
@@ -135,6 +151,10 @@
 							<span class="block"
 								>L &nbsp; {{ Math.round(daily.main.temp_min) }}&deg;c
 							</span>
+						</p>
+						<p class="text-xs" v-if="daily.amount">
+							<i class="fa-solid fa-cloud-rain"></i>
+							&nbsp; {{ daily.amount }} m.m
 						</p>
 					</div>
 				</div>
@@ -167,7 +187,7 @@ const BASE_URL = 'https://api.openweathermap.org/data/2.5/'
 const getWeatherData = async (param) => {
 	try {
 		const weatherData = await axios.get(
-			`${BASE_URL}${param}?lat=${route.query.lat}&lon=${route.query.lng}&appid=${API_KEY}&units=metric`
+			`${BASE_URL}${param}?lat=${route.query.lat}&lon=${route.query.lng}&appid=${API_KEY}&units=metric&lang=se`
 		)
 		await new Promise((res) => setTimeout(res, 500))
 		return weatherData.data
@@ -179,9 +199,16 @@ const getWeatherData = async (param) => {
 const weatherData = await getWeatherData('weather')
 const forecastData = await getWeatherData('forecast')
 
+weatherData.list.forEach((item) => {
+	if (!item.rain) return
+	item.amount = Object.values(item.rain)[0]
+})
+
 forecastData.list.forEach((item) => {
 	const timestamp = item.dt * 1000
 	item.date = new Date(timestamp).toISOString().split('T')[0]
+	if (!item.rain) return
+	item.amount = Object.values(item.rain)[0]
 })
 
 const dailyDataMap = new Map()
