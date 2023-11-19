@@ -67,14 +67,14 @@
 		<!-- Hourly Weather -->
 		<div class="max-w-screen-md w-full py-4">
 			<div class="mx-8 text-white">
-				<h2 class="mb-4">Kommande 24h</h2>
+				<h2 class="mb-4 text-lg">Kommande dygn</h2>
 				<div class="flex gap-10 overflow-x-scroll">
 					<div
 						v-for="hourData in forecastData.list.slice(0, 9)"
 						:key="hourData.dt"
 						class="flex flex-col gap-4 items-center"
 					>
-						<p class="whitespace-nowrap text-md">
+						<p class="whitespace-nowrap text-md capitalize">
 							{{
 								new Date(hourData.dt_txt).toLocaleTimeString('sv-SE', {
 									weekday: 'long',
@@ -89,8 +89,51 @@
 							alt=""
 						/>
 						<p class="text-xl">{{ Math.round(hourData.main.temp) }}&deg;c</p>
-						<p class="text-sm text-center">
-							{{ Math.round(hourData.main.feels_like) }}&deg;c
+						<p class="text-xs text-center">
+							<span class="block"
+								>H &nbsp; {{ Math.round(hourData.main.temp_max) }}&deg;c</span
+							>
+							<span class="block"
+								>L &nbsp; {{ Math.round(hourData.main.temp_min) }}&deg;c
+							</span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Weekly Weather -->
+		<div class="max-w-screen-md w-full py-4">
+			<div class="mx-8 text-white">
+				<h2 class="mb-4 text-lg">Kommande vecka</h2>
+				<div class="flex gap-10 overflow-x-scroll">
+					<div
+						v-for="daily in dailyData"
+						:key="daily.dt"
+						class="flex flex-col gap-4 items-center"
+					>
+						<p class="whitespace-nowrap text-md capitalize">
+							{{
+								new Date(daily.dt_txt.replace(/-/g, '/')).toLocaleDateString(
+									'sv-SE',
+									{
+										weekday: 'long',
+									}
+								)
+							}}
+						</p>
+						<img
+							class="w-auto h-[50px] object-cover"
+							:src="`http://openweathermap.org/img/wn/${daily.weather[0].icon}@2x.png`"
+							alt=""
+						/>
+						<p class="text-xl">{{ Math.round(daily.main.temp) }}&deg;c</p>
+						<p class="text-xs text-center">
+							<span class="block"
+								>H &nbsp; {{ Math.round(daily.main.temp_max) }}&deg;c</span
+							>
+							<span class="block"
+								>L &nbsp; {{ Math.round(daily.main.temp_min) }}&deg;c
+							</span>
 						</p>
 					</div>
 				</div>
@@ -134,6 +177,21 @@ const getWeatherData = async (param) => {
 
 const weatherData = await getWeatherData('weather')
 const forecastData = await getWeatherData('forecast')
+
+forecastData.list.forEach((item) => {
+	const timestamp = item.dt * 1000
+	item.date = new Date(timestamp).toISOString().split('T')[0]
+})
+
+const dailyDataMap = new Map()
+forecastData.list.forEach((item) => {
+	const date = item.date
+	if (!dailyDataMap.has(date)) {
+		dailyDataMap.set(date, item)
+	}
+})
+
+const dailyData = Array.from(dailyDataMap.values())
 
 const removeCity = () => {
 	const cities = JSON.parse(localStorage.getItem('savedCities'))
