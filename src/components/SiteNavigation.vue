@@ -3,16 +3,22 @@
 		class="sticky top-0 bg-weather-primary shadow-lg mx-auto w-full md:w-5/6 rounded-2xl"
 	>
 		<nav
-			class="container flex flex-col sm:flex-row items-center gap-4 text-white py-6 mx-auto"
+			class="container flex flex-row items-center justify-between gap-4 text-white py-6 mx-auto"
 		>
-			<img src="logo.svg" alt="Vue.JS" width="32" height="32" class="italic" />
 			<RouterLink :to="{ name: 'home' }">
 				<div class="flex items-center gap-3">
-					<p class="text-2xl">Väder App</p>
+					<img
+						src="logo.svg"
+						alt="Vue.JS"
+						width="32"
+						height="32"
+						class="italic"
+					/>
+					<p class="text-2xl font-bold">Väder App</p>
 				</div>
 			</RouterLink>
 
-			<div class="flex gap-3 flex-1 justify-end">
+			<div class="flex gap-3">
 				<i
 					class="fa-solid fa-circle-info text-xl hover:text-weather-secondary duration-150 cursor-pointer"
 					@click="toggleModal"
@@ -28,8 +34,8 @@
 				<div class="text-black">
 					<h1 class="text-2xl mb-1">Om</h1>
 					<p class="mb-4">
-						Med Vue Väder App är det möjligt för dig att följa det aktuella och
-						kommande vädret i städer som du själv väljer.
+						Med denna Väder App är det möjligt för dig att följa det aktuella
+						och kommande vädret i städer som du själv väljer.
 					</p>
 					<h2 class="text-2xl">Hur det fungerar</h2>
 					<ol class="list-decimal list-inside mb-4">

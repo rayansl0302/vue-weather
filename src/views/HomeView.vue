@@ -5,18 +5,18 @@
 				type="text"
 				v-model="searchQurey"
 				@input="getSearchResults"
-				placeholder="Search for a city!"
-				class="py-2 px-1 w-full bg-transparent border-b focus:border-weather-secondary focus:outline-none focus:shadow-[0px_1px_0_0_#004E71]"
+				placeholder="Sök efter en stad!"
+				class="py-2 px-1 w-full bg-transparent border-b focus:border-weather-secondary focus:outline-none focus:shadow-[0px_1px_0_0_#004E71] text-center"
 			/>
 			<ul
 				v-if="mapBoxSearchResults"
 				class="absolute bg-weather-secondary text-white w-full shadow-md py-2 px-1 top-[66px]"
 			>
 				<li v-if="searchError">
-					Sorry, something went wrong, please try again.
+					Ursäkta, något gick fel. Vänligen försök igen.
 				</li>
 				<li v-if="!searchError && mapBoxSearchResults.length === 0">
-					No results match your query, try a different term
+					Inga städer matchar din sökning, försök igen med en riktigt stad....
 				</li>
 				<template v-else>
 					<li

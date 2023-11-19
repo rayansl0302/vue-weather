@@ -3,7 +3,8 @@
 		<CityCard :city="city" @click="goToCotyView(city)" />
 	</div>
 	<p v-if="savedCities.length === 0" class="text-center">
-		No locations added. To start tracking a location, search in the field above.
+		<span class="block">Inga platser tillagda.</span> För att spara en plats,
+		sök i fältet ovan.
 	</p>
 </template>
 
