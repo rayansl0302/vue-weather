@@ -9,6 +9,7 @@
 			<AnimatedPlaceholder class="max-w-[100px] h-4 w-full mb-1" />
 			<AnimatedPlaceholder class="max-w-[80px] h-4 w-full mb-1" />
 			<AnimatedPlaceholder class="max-w-[80px] h-4 w-full mb-1" />
+			<AnimatedPlaceholder class="max-w-[80px] h-4 w-full mb-1" />
 			<AnimatedPlaceholder class="max-w-[60px] h-4 w-full mb-1" />
 			<AnimatedPlaceholder class="max-w-[60px] h-4 w-full mb-1" />
 		</div>

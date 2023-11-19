@@ -47,9 +47,13 @@
 					class="fa-solid fa-angles-down"
 				></i>
 			</p>
-			<p v-if="weatherData.amount">
+			<p v-if="weatherData.rainAmount">
 				<i class="fa-solid fa-cloud-rain"></i>
-				&nbsp; {{ weatherData.amount }}<span> m.m</span>
+				&nbsp; {{ weatherData.rainAmount }}<span> m.m</span>
+			</p>
+			<p v-if="weatherData.snowAmount">
+				<i class="fa-solid fa-snowflake"></i>
+				&nbsp; {{ weatherData.snowAmount }}<span> m.m</span>
 			</p>
 			<p>
 				<i class="fa-regular fa-sun"></i>
@@ -190,6 +194,12 @@ const getWeatherData = async (param) => {
 			`${BASE_URL}${param}?lat=${route.query.lat}&lon=${route.query.lng}&appid=${API_KEY}&units=metric&lang=se`
 		)
 		await new Promise((res) => setTimeout(res, 500))
+		if (weatherData.data && weatherData.data.rain) {
+			weatherData.data.rainAmount = Object.values(weatherData.data.rain)[0]
+		}
+		if (weatherData.data && weatherData.data.snow) {
+			weatherData.data.snowAmount = Object.values(weatherData.data.snow)[0]
+		}
 		return weatherData.data
 	} catch (err) {
 		console.error('ERROR::', err)
@@ -199,11 +209,7 @@ const getWeatherData = async (param) => {
 const weatherData = await getWeatherData('weather')
 const forecastData = await getWeatherData('forecast')
 
-weatherData.list.forEach((item) => {
-	if (!item.rain) return
-	item.amount = Object.values(item.rain)[0]
-})
-
+console.log(weatherData)
 forecastData.list.forEach((item) => {
 	const timestamp = item.dt * 1000
 	item.date = new Date(timestamp).toISOString().split('T')[0]
