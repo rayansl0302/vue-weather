@@ -1,6 +1,6 @@
 <template>
 	<main class="container text-white mx-auto">
-		<div class="pt-4 mb-8 relative">
+		<div class="pt-4 mb-8 relative z-10">
 			<input
 				type="text"
 				v-model="searchQurey"
@@ -50,7 +50,6 @@ import CityCardSkeleton from '../components/CityCardSkeleton.vue'
 const router = useRouter()
 
 const previewCity = (searchResults) => {
-	console.log(searchResults)
 	const [city, state] = searchResults.place_name.split(',')
 	router.push({
 		name: 'cityView',

@@ -1,6 +1,6 @@
 <template>
 	<header
-		class="sticky top-0 bg-weather-primary shadow-lg mx-auto w-full md:w-5/6 rounded-2xl"
+		class="sticky top-0 bg-weather-primary shadow-lg mx-auto w-full md:w-5/6 rounded-2xl z-10"
 	>
 		<nav
 			class="container flex flex-row items-center justify-between gap-4 text-white py-6 mx-auto"

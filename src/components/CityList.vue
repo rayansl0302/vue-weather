@@ -23,21 +23,31 @@ const getCities = async () => {
 	if (localStorage.getItem('savedCities')) {
 		savedCities.value = JSON.parse(localStorage.getItem('savedCities'))
 		const req = []
-		savedCities.value.forEach((city) => {
-			req.push(
-				axios.get(
+
+		await Promise.all(
+			savedCities.value.map(async (city) => {
+				const weatherResponse = await axios.get(
 					`https://api.openweathermap.org/data/2.5/weather?lat=${city.coords.lat}&lon=${city.coords.lng}&appid=${API_KEY}&units=metric`
 				)
-			)
-		})
 
-		const weatherData = await Promise.all(req)
-		await new Promise((res) => setTimeout(res, 500))
+				city.weather = weatherResponse.data
 
-		weatherData.forEach((value, index) => {
-			savedCities.value[index].weather = value.data
-		})
+				const cityName = city.weather.name.replace(/\s+/g, '-').toLowerCase()
 
+				try {
+					const teleportResponse = await axios.get(
+						`https://api.teleport.org/api/urban_areas/slug:${cityName}/images/`
+					)
+					city.image =
+						teleportResponse.data.photos.length > 0
+							? teleportResponse.data.photos[0].image
+							: 'URL_TO_FALLBACK_IMAGE'
+				} catch (error) {
+					console.info(`Can't find a image for ${cityName}`)
+					city.image = ''
+				}
+			})
+		)
 		savedCities.value.forEach((item) => {
 			if (item.weather.rain) {
 				item.weather.rainAmount = Object.values(item.weather.rain)[0]
@@ -46,8 +56,6 @@ const getCities = async () => {
 				item.weather.snowAmount = Object.values(item.weather.snow)[0]
 			}
 		})
-
-		console.log(savedCities.value)
 	}
 }
 await getCities()
