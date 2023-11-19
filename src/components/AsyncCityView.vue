@@ -49,11 +49,11 @@
 			</p>
 			<p v-if="weatherData.rainAmount">
 				<i class="fa-solid fa-cloud-rain"></i>
-				&nbsp; {{ weatherData.rainAmount }}<span> m.m</span>
+				{{ weatherData.rainAmount }}<span> m.m</span>
 			</p>
 			<p v-if="weatherData.snowAmount">
 				<i class="fa-solid fa-snowflake"></i>
-				&nbsp; {{ weatherData.snowAmount }}<span> m.m</span>
+				{{ weatherData.snowAmount }}<span> m.m</span>
 			</p>
 			<p>
 				<i class="fa-regular fa-sun"></i>
@@ -81,7 +81,7 @@
 					<div
 						v-for="hourData in forecastData.list.slice(0, 9)"
 						:key="hourData.dt"
-						class="flex flex-col gap-1 items-center"
+						class="flex flex-col gap-1 items-center text-center"
 					>
 						<p class="whitespace-nowrap text-md capitalize">
 							{{
@@ -101,7 +101,7 @@
 							{{ weatherData.weather[0].description }}
 						</p>
 						<p class="text-xl">{{ Math.round(hourData.main.temp) }}&deg;c</p>
-						<p class="text-xs text-center">
+						<p class="text-xs">
 							<span class="block"
 								>H &nbsp; {{ Math.round(hourData.main.temp_max) }}&deg;c</span
 							>
@@ -109,9 +109,13 @@
 								>L &nbsp; {{ Math.round(hourData.main.temp_min) }}&deg;c
 							</span>
 						</p>
-						<p class="text-xs" v-if="hourData.amount">
-							<i v-if="hourData.amount" class="fa-solid fa-cloud-rain"></i>
-							&nbsp; {{ hourData.amount }} m.m
+						<p class="text-xs" v-if="hourData.rainAmount">
+							<i v-if="hourData.rainAmount" class="fa-solid fa-cloud-rain"></i>
+							&nbsp; {{ hourData.rainAmount }} m.m
+						</p>
+						<p class="text-xs" v-if="hourData.snowAmount">
+							<i class="fa-solid fa-snowflake"></i>
+							{{ hourData.snowAmount }}<span> m.m</span>
 						</p>
 					</div>
 				</div>
@@ -119,7 +123,7 @@
 		</div>
 		<hr class="border-white border-opacity-10 border w-full mb-4" />
 		<!-- Weekly Weather -->
-		<div class="max-w-screen-md w-full py-4">
+		<div class="max-w-screen-md w-full py-4 text-center">
 			<div class="mx-8 text-white">
 				<h2 class="mb-4 text-lg font-bold">Kommande vecka</h2>
 				<div class="flex gap-10 overflow-x-scroll md:justify-center py-4">
@@ -148,7 +152,7 @@
 						</p>
 						<p class="text-xl">{{ Math.round(daily.main.temp) }}&deg;c</p>
 
-						<p class="text-xs text-center">
+						<p class="text-xs">
 							<span class="block"
 								>H &nbsp; {{ Math.round(daily.main.temp_max) }}&deg;c</span
 							>
@@ -156,9 +160,13 @@
 								>L &nbsp; {{ Math.round(daily.main.temp_min) }}&deg;c
 							</span>
 						</p>
-						<p class="text-xs" v-if="daily.amount">
+						<p class="text-xs" v-if="daily.rainAmount">
 							<i class="fa-solid fa-cloud-rain"></i>
-							&nbsp; {{ daily.amount }} m.m
+							&nbsp; {{ daily.rainAmount }} m.m
+						</p>
+						<p class="text-xs" v-if="daily.snowAmount">
+							<i class="fa-solid fa-snowflake"></i>
+							&nbsp; {{ daily.snowAmount }} m.m
 						</p>
 					</div>
 				</div>
@@ -193,13 +201,16 @@ const getWeatherData = async (param) => {
 		const weatherData = await axios.get(
 			`${BASE_URL}${param}?lat=${route.query.lat}&lon=${route.query.lng}&appid=${API_KEY}&units=metric&lang=se`
 		)
+
 		await new Promise((res) => setTimeout(res, 500))
+
 		if (weatherData.data && weatherData.data.rain) {
 			weatherData.data.rainAmount = Object.values(weatherData.data.rain)[0]
 		}
 		if (weatherData.data && weatherData.data.snow) {
 			weatherData.data.snowAmount = Object.values(weatherData.data.snow)[0]
 		}
+
 		return weatherData.data
 	} catch (err) {
 		console.error('ERROR::', err)
@@ -209,12 +220,15 @@ const getWeatherData = async (param) => {
 const weatherData = await getWeatherData('weather')
 const forecastData = await getWeatherData('forecast')
 
-console.log(weatherData)
 forecastData.list.forEach((item) => {
 	const timestamp = item.dt * 1000
 	item.date = new Date(timestamp).toISOString().split('T')[0]
-	if (!item.rain) return
-	item.amount = Object.values(item.rain)[0]
+	if (item.rain) {
+		item.rainAmount = Object.values(item.rain)[0]
+	}
+	if (item.snow) {
+		item.snowAmount = Object.values(item.snow)[0]
+	}
 })
 
 const dailyDataMap = new Map()
