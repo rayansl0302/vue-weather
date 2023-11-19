@@ -7,13 +7,16 @@
 		>
 			<RouterLink :to="{ name: 'home' }">
 				<div class="flex items-center gap-3">
-					<img
-						src="logo.svg"
+					<Logo />
+					<!-- <img
+						src="{{
+						logo
+						}}"
 						alt="Vue.JS"
 						width="32"
 						height="32"
 						class="italic"
-					/>
+					/> -->
 					<p class="text-2xl font-bold">Väder App</p>
 				</div>
 			</RouterLink>
@@ -68,6 +71,7 @@ import { uid } from 'uid'
 import { ref } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import BaseModal from './BaseModal.vue'
+import Logo from './Logo.vue'
 
 const route = useRoute()
 const router = useRouter()

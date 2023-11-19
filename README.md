@@ -1,5 +1,13 @@
-# vue-weather-app
+## The site is live!
 
+[Väder App](https://)
+
+<hr>
+This is the result of a vue tutorial, a simple weather app that uses mapbox to search for cities, when a city is found a new query to openweathermap with the lat/lng is triggerd and the result is the curret weather, 3h forecast for the next 24h and daily forecast for the comming week.
+
+Uses localStorage for users to save cities in a list!
+
+<hr>
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
