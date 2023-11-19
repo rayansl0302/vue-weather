@@ -33,9 +33,21 @@ const getCities = async () => {
 
 		const weatherData = await Promise.all(req)
 		await new Promise((res) => setTimeout(res, 500))
+
 		weatherData.forEach((value, index) => {
 			savedCities.value[index].weather = value.data
 		})
+
+		savedCities.value.forEach((item) => {
+			if (item.weather.rain) {
+				item.weather.rainAmount = Object.values(item.weather.rain)[0]
+			}
+			if (item.weather.snow) {
+				item.weather.snowAmount = Object.values(item.weather.snow)[0]
+			}
+		})
+
+		console.log(savedCities.value)
 	}
 }
 await getCities()

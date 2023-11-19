@@ -162,11 +162,11 @@
 						</p>
 						<p class="text-xs" v-if="daily.rainAmount">
 							<i class="fa-solid fa-cloud-rain"></i>
-							&nbsp; {{ daily.rainAmount }} m.m
+							{{ daily.rainAmount }} m.m
 						</p>
 						<p class="text-xs" v-if="daily.snowAmount">
 							<i class="fa-solid fa-snowflake"></i>
-							&nbsp; {{ daily.snowAmount }} m.m
+							{{ daily.snowAmount }} m.m
 						</p>
 					</div>
 				</div>
