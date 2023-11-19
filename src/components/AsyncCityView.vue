@@ -127,6 +127,7 @@ const getWeatherData = async (param) => {
 		const weatherData = await axios.get(
 			`${BASE_URL}${param}?lat=${route.query.lat}&lon=${route.query.lng}&appid=${API_KEY}&units=metric`
 		)
+		await new Promise((res) => setTimeout(res, 500))
 		return weatherData.data
 	} catch (err) {
 		console.error('ERROR::', err)
