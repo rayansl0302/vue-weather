@@ -10,7 +10,7 @@ const router = createRouter({
 			name: 'home',
 			component: HomeView,
 			meta: {
-				title: 'Hem',
+				title: 'Inicio',
 			},
 		},
 		{
@@ -18,7 +18,7 @@ const router = createRouter({
 			name: 'cityView',
 			component: CityView,
 			meta: {
-				title: 'Väder',
+				title: 'Clima',
 			},
 		},
 	],
@@ -27,7 +27,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 	document.title = `${
 		to.params.state ? `${to.params.city}, ${to.params.state}` : to.meta.title
-	} | Vue Väder`
+	} | Em Vue`
 	next()
 })
 
