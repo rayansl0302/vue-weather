@@ -1,36 +1,36 @@
-## The site is live!
+## O site está no ar!
 
-[Väder App](https://vue-vader-app.netlify.app/)
-
-<hr>
-This is the result of a vue tutorial, a simple weather app that uses mapbox to search for cities, when a city is found a new query to openweathermap with the lat/lng is triggerd and the result is the curret weather, 3h forecast for the next 24h and daily forecast for the comming week.
-
-Uses localStorage for users to save cities in a list!
+[Projeto de previsão do tempo](https://projeto-clima-sigma.vercel.app/)
 
 <hr>
-This template should help get you started developing with Vue 3 in Vite.
+Este é o resultado de um tutorial de Vue, um aplicativo de clima simples que usa o Mapbox para procurar cidades. Quando uma cidade é encontrada, uma nova consulta com as coordenadas de latitude/longitude é acionada no OpenWeatherMap, e o resultado é o clima atual, previsão de 3 horas para as próximas 24 horas e previsão diária para a próxima semana.
 
-## Recommended IDE Setup
+Utiliza o armazenamento local (localStorage) para que os usuários possam salvar cidades em uma lista!
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+<hr>
+Este modelo deve ajudar você a começar a desenvolver com o Vue 3 no Vite.
 
-## Customize configuration
+## Configuração recomendada do IDE
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (e desative o Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-## Project Setup
+## Personalizar configuração
+
+Veja [Referência de Configuração Vite](https://vitejs.dev/config/).
+
+## Configuração do Projeto
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Compilar e recarregar automaticamente para desenvolvimento
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+### Compilar e Minificar para Produção
 
 ```sh
 npm run build
