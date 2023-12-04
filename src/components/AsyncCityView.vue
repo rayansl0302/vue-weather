@@ -201,8 +201,7 @@
   // Obtém dados do clima atual e da previsão
   const weatherData = await getWeatherData('weather')
   const forecastData = await getWeatherData('forecast')
-  console.log("forecastData", forecastData);
-  
+    
   // Cria um mapa para armazenar dados diários
   const dailyDataMap = new Map()
   
